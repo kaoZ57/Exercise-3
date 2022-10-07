@@ -10,27 +10,34 @@ namespace Exercise_3
     {
         static void Main(string[] args)
         {
+        Restart:
             HangmanService hangman = new HangmanService();
             hangman.Restart();
 
             hangman.GetDisplay();
 
-            //Console.Write("\nplease enter character: ");
-
-            //char playerGuess = char.Parse(Console.ReadLine());
-
-            hangman.Input(char.Parse("o"));
-            hangman.Input(char.Parse("t"));
-            hangman.Input(char.Parse("g"));
-            hangman.Input(char.Parse("a"));
-            //hangman.GetRemainingTry();
-
-
-            /*while (true)
+            while (true)
             {
-                hangman.GetDisplay();
-                hangman.Input();
-            }*/
+                char playerGuess;
+            UP:
+                try
+                {
+                    Console.Write("\nplease enter character: ");
+                    playerGuess = char.Parse(Console.ReadLine());
+
+                    if (playerGuess.ToString() == "")
+                    {
+                        goto Restart;
+                    }
+                }
+                catch (Exception)
+                {
+                    goto UP;
+                }
+
+                hangman.Input(playerGuess);
+                Console.WriteLine(hangman.GetRemainingTry());
+            }
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,7 +13,7 @@ namespace Exercise_3
         string[] vocabulary = { "goat" };
         string mysteryWord;
         char[] guess;
-        int remaining;
+        int remaining = 10;
         enum check { Correct, Incorrect, Duplicate }
 
         public void Restart()
@@ -21,8 +22,7 @@ namespace Exercise_3
             Random randGen = new Random();
             var idx = randGen.Next(0, vocabulary.Length - 1);
             mysteryWord = vocabulary[idx];
-            Console.WriteLine(mysteryWord);
-            Console.WriteLine();
+            //Console.WriteLine(mysteryWord);
         }
         public void GetDisplay()
         {
@@ -31,25 +31,53 @@ namespace Exercise_3
             {
                 guess[p] = '*';
             }
+            Console.WriteLine(guess);
         }
         public void Input(char playerGuess)
         {
-            for (int j = 0; j < mysteryWord.Length; j++)
+            int j;
+            for (j = 0; j < mysteryWord.Length; j++)
             {
-                if (playerGuess == mysteryWord[j])
+                if (playerGuess == mysteryWord[j])// Correct
                 {
                     guess[j] = playerGuess;
+
+                    if (new string(guess) == mysteryWord)// win
+                    {
+                        Console.WriteLine(guess);
+                        Console.Write("Congratulation,you’re win.");
+                        break;
+                    }
+
+                    Console.Write(guess);
+                    break;
                 }
-                Console.Write(guess[j]);
+                else if (playerGuess == guess[j])// Duplicate
+                {
+                    Console.Write(guess);
+                    Console.Write("You have already tried this character.");
+                    break;
+                }
             }
-            Console.WriteLine("\nguess.Length: " + guess.Length);
-            Console.WriteLine("mysteryWord.Length: " + mysteryWord.Length);
+
+            if (j == mysteryWord.Length)// Incorrect
+            {
+                Console.Write(guess);
+                remaining -= 1;
+            }
+            if (remaining <= 0)
+            {
+                Console.Write("Condolences,you’re lose.");
+            }
             Console.WriteLine();
+
+            //.WriteLine("\nguess.Length: " + guess.Length);
+            //Console.WriteLine("mysteryWord.Length: " + mysteryWord.Length
             //return Enum.GetValues(typeof(check));
         }
-        public int GetRemainingTry()
+        public string GetRemainingTry()
         {
-            return remaining;
+            return "Remaining: " + remaining;
         }
     }
 }
