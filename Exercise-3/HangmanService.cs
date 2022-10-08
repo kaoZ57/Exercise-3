@@ -9,8 +9,8 @@ namespace Exercise_3
 {
     internal class HangmanService
     {
-        //string[] vocabulary = { "sheep", "goat", "computer", "america", "icecream", "jasmine", "orange", "mango" };
-        string[] vocabulary = { "goat" };
+        string[] vocabulary = { "goat", "computer", "jasmine", "orange", "mango" };
+        //string[] vocabulary = { "goat" };
         string mysteryWord;
         char[] guess;
         int remaining = 10;
@@ -69,6 +69,7 @@ namespace Exercise_3
                 Console.WriteLine("Condolences,you’re lose.");
             }
         }
+
         public string GetRemainingTry()
         {
             return "Remaining: " + remaining;
