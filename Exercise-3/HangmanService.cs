@@ -9,7 +9,7 @@ namespace Exercise_3
 {
     internal class HangmanService
     {
-        //string[] vocabulary = { "sheep", "goat", "computer", "america", "watermelon", "icecream", "jasmine", "pineapple", "orange", "mango" };
+        //string[] vocabulary = { "sheep", "goat", "computer", "america", "icecream", "jasmine", "orange", "mango" };
         string[] vocabulary = { "goat" };
         string mysteryWord;
         char[] guess;
@@ -22,15 +22,15 @@ namespace Exercise_3
             Random randGen = new Random();
             var idx = randGen.Next(0, vocabulary.Length - 1);
             mysteryWord = vocabulary[idx];
-            //Console.WriteLine(mysteryWord);
-        }
-        public void GetDisplay()
-        {
             guess = new char[mysteryWord.Length];
             for (int p = 0; p < mysteryWord.Length; p++)
             {
                 guess[p] = '*';
             }
+            //Console.WriteLine(mysteryWord);
+        }
+        public void GetDisplay()
+        {
             Console.WriteLine(guess);
         }
         public void Input(char playerGuess)
@@ -38,42 +38,36 @@ namespace Exercise_3
             int j;
             for (j = 0; j < mysteryWord.Length; j++)
             {
-                if (playerGuess == mysteryWord[j])// Correct
+                if (playerGuess == guess[j])// Duplicate
+                {
+                    Console.WriteLine("You have already tried this character.");
+                    break;
+                }
+                else if (playerGuess == mysteryWord[j])// Correct
                 {
                     guess[j] = playerGuess;
 
-                    if (new string(guess) == mysteryWord)// win
+                    if (new string(guess) == mysteryWord)// Win
                     {
-                        Console.WriteLine(guess);
-                        Console.Write("Congratulation,you’re win.");
+                        GetDisplay();
+                        Console.WriteLine("Congratulation,you’re win.");
                         break;
                     }
 
-                    Console.Write(guess);
-                    break;
-                }
-                else if (playerGuess == guess[j])// Duplicate
-                {
-                    Console.Write(guess);
-                    Console.Write("You have already tried this character.");
+                    GetDisplay();
                     break;
                 }
             }
-
             if (j == mysteryWord.Length)// Incorrect
             {
-                Console.Write(guess);
                 remaining -= 1;
+                Console.WriteLine("Sorry, you ’re wrong. Remaining.");
+                Console.WriteLine(GetRemainingTry());
             }
             if (remaining <= 0)
             {
-                Console.Write("Condolences,you’re lose.");
+                Console.WriteLine("Condolences,you’re lose.");
             }
-            Console.WriteLine();
-
-            //.WriteLine("\nguess.Length: " + guess.Length);
-            //Console.WriteLine("mysteryWord.Length: " + mysteryWord.Length
-            //return Enum.GetValues(typeof(check));
         }
         public string GetRemainingTry()
         {

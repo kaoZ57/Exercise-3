@@ -19,24 +19,18 @@ namespace Exercise_3
             while (true)
             {
                 char playerGuess;
-            UP:
                 try
                 {
                     Console.Write("\nplease enter character: ");
                     playerGuess = char.Parse(Console.ReadLine());
-
-                    if (playerGuess.ToString() == "")
-                    {
-                        goto Restart;
-                    }
                 }
                 catch (Exception)
                 {
-                    goto UP;
+                    Console.Clear();
+                    goto Restart;
                 }
 
                 hangman.Input(playerGuess);
-                Console.WriteLine(hangman.GetRemainingTry());
             }
         }
     }
